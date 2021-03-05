@@ -24,6 +24,14 @@ def randomizeMirrors(romFile,spoilerLogEnable,totalRandom,spoilerLogFileName):
 	mirrorlist.remove("Int2_Int3")
 	mirrorlist.remove("Int3_Int2")
 	mirrorlist.remove("Car19_Reset") #Cause it's fucking aggrivating
+	mirrorlist.remove("Car19_N")
+	mirrorlist.remove("Car19_NE")
+	mirrorlist.remove("Car19_E")
+	mirrorlist.remove("Car19_SE")
+	mirrorlist.remove("Car19_S")
+	mirrorlist.remove("Car19_SW")
+	mirrorlist.remove("Car19_W")
+	mirrorlist.remove("Car19_NW")
 
 	#I've removed the option to randomize hub mirrors. It's not fun, and it just caused problems I'm too lazy to fix.
 	mirrorlist.remove("Rbr1_Rbr27")
@@ -61,6 +69,26 @@ def randomizeMirrors(romFile,spoilerLogEnable,totalRandom,spoilerLogFileName):
 	if spoilerLogEnable == 1:
 		random.seed(random.randint(0,999999))
 	
+	#Change the appearance of trans-world mirrors.
+	worldadds = [ 8936124, 8936160, 8938120, 8943824, 8943860, 8944700, 8945536, 8948624, 8952188, 8955204, 8956436, 8959468, 8960196, 8970592, 8977420, 8978776, 8986156, 8988736, 8989284, 8991428, 8992080, 8994916, 9015868, 9018236, 9024384, 9024820, 9032592, 9040044, 9044108, 9049652, 9054584, 9055424, 9056184 ]
+	for x in range(len(worldadds)):
+		romFile.seek(worldadds[x] - 4) 						# Seek to the Y position of the door
+		yPos = int.from_bytes(romFile.read(2),'little') - 8	# Move the door up 8 pixels so it overlaps the warp tile.
+		romFile.seek(worldadds[x]-4)
+		romFile.write(yPos.to_bytes(2,'little'))			# Write the changed Y coordinate.
+		writeValueToRom(romFile,worldadds[x],111,1)			# Change the object number of the mirror to 6F (a regular mirror).
+		writeValueToRom(romFile,worldadds[x]+2,1,1)			# This byte changes whether or not the mirror has a "boarded up sprite" if not on a revealed warp tile. This makes them look proper if they're hidden by a mirra.
+	
+	#Change the appearance of mirrors exiting switch rooms.
+	hubadds = [ 9040044, 9040188, 9014668, 9014632, 9056436, 9056472, 8970048, 8970012, 9000960, 9000924, 9036740, 9036704, 8982812, 8982776, 8988520, 8988556, 9049760, 9049832, 8945356, 8945392, 8947464, 8947500, 8959284, 8959320, 8940048, 8940084, 9024020, 9024056, 9024276, 9024384 ]
+	for x in range(len(hubadds)):
+		romFile.seek(hubadds[x] - 4) 						# Seek to the Y position of the door
+		yPos = int.from_bytes(romFile.read(2),'little') + 8	# Move the door down 8 pixels so it overlaps the warp tile.
+		romFile.seek(hubadds[x]-4)
+		romFile.write(yPos.to_bytes(2,'little'))			# Write the changed Y coordinate.
+		writeValueToRom(romFile,hubadds[x],153,1)			# Change the object number of the mirror to 99 (a world mirror).
+		writeValueToRom(romFile,hubadds[x]+2,1,1)			# This byte changes whether or not the mirror has a "boarded up sprite" if not on a revealed warp tile. This makes them look proper if they're hidden by a mirra.
+	
 	#Randomize warp stars.
 	print("Randomizing warp stars...")
 	warpstaradds = [ [ 8944554, 8944566 ], [ 8964698, 8964710 ], [ 8981034, 8981046 ], [ 8998010, 8998022 ], [ 9006434, 9006446 ], [ 9065234, 9065246 ] ]
@@ -72,7 +100,7 @@ def randomizeMirrors(romFile,spoilerLogEnable,totalRandom,spoilerLogFileName):
 		writeValueToRom(romFile,warpstaradds[x][1],warpstarvalues[x][1],6)
 	
 	#Randomize fused cannons.
-	print("Randomizing canons stars...")
+	print("Randomizing CANNONs stars...")
 	cannonadds = [ 8951430, 8999618, 9033722, 9050022 ]
 	cannonvalues = [ [ 4179903404153243910, [ "Rbr26_Rbr27", "Rbr26_Rbr25" ] ], [ 3170817811668802562, [ "Mus24L_Kracko" ] ], [ 9583663305579299867, [ "Oli5Bottom_Oli6" ] ], [ 937313871469740802, [ "Rad28_Rad29" ] ] ]
 
@@ -150,7 +178,7 @@ def randomizeMirrors(romFile,spoilerLogEnable,totalRandom,spoilerLogFileName):
 					spoilerLogCurrentIndex = spoilerLogLists.index(x)
 					spoilerLogCurrentString = x.copy()
 			
-			#If the exit is a CANON or a WARPSTAR, add the exits for that warpstar or canon to the list and move on.
+			#If the exit is a CANNON or a WARPSTAR, add the exits for that warpstar or CANNON to the list and move on.
 			if currentPick.startswith("WARPSTAR") and not ( currentPick in alreadyRandomized ):
 				alreadyRandomized.append(currentPick)
 				for x in warpstarvalues[int(currentPick[8])-1][2]:
@@ -163,7 +191,7 @@ def randomizeMirrors(romFile,spoilerLogEnable,totalRandom,spoilerLogFileName):
 						else:
 							spoilerLogLists.append(spoilerLogCurrentString.copy())
 							spoilerLogLists[-1].append(x)
-			elif currentPick.startswith("CANON") and not ( currentPick in alreadyRandomized ):
+			elif currentPick.startswith("CANNON") and not ( currentPick in alreadyRandomized ):
 				alreadyRandomized.append(currentPick)
 				for x in cannonvalues[int(currentPick[5])-1][1]:
 					if not x in alreadyRandomized:
@@ -176,7 +204,7 @@ def randomizeMirrors(romFile,spoilerLogEnable,totalRandom,spoilerLogFileName):
 							spoilerLogLists.append(spoilerLogCurrentString.copy())
 							spoilerLogLists[-1].append(x)
 
-			#If it's not a CANON or a WARPSTAR, then it's probably something we can work with?
+			#If it's not a CANNON or a WARPSTAR, then it's probably something we can work with?
 			elif currentPick in mirrorlist:
 				currentPickId = mirrorlist.index(currentPick)
 				#Dead-end test. If a mirror's exits are all already randomized, add it to the dead-end list and re-random.
@@ -258,7 +286,7 @@ def randomizeMirrors(romFile,spoilerLogEnable,totalRandom,spoilerLogFileName):
 					spoilerLogCurrentIndex = spoilerLogLists.index(x)
 					spoilerLogCurrentString = x.copy()
 		
-			#If the exit is a CANON or a WARPSTAR, add the exits for that warpstar or canon to the list and move on.
+			#If the exit is a CANNON or a WARPSTAR, add the exits for that warpstar or CANNON to the list and move on.
 			if currentPick.startswith("WARPSTAR") and not ( currentPick in alreadyRandomized ):
 				alreadyRandomized.append(currentPick)
 				for x in warpstarvalues[int(currentPick[8])-1][2]:
@@ -271,9 +299,9 @@ def randomizeMirrors(romFile,spoilerLogEnable,totalRandom,spoilerLogFileName):
 						else:
 							spoilerLogLists.append(spoilerLogCurrentString.copy())
 							spoilerLogLists[-1].append(x)
-			elif currentPick.startswith("CANON") and not ( currentPick in alreadyRandomized ):
+			elif currentPick.startswith("CANNON") and not ( currentPick in alreadyRandomized ):
 				alreadyRandomized.append(currentPick)
-				for x in cannonvalues[int(currentPick[5])-1][1]:
+				for x in cannonvalues[int(currentPick[6])-1][1]:
 					if not x in alreadyRandomized:
 						queueList.append(x)
 						#Spoiler Log Stuff
@@ -284,7 +312,7 @@ def randomizeMirrors(romFile,spoilerLogEnable,totalRandom,spoilerLogFileName):
 							spoilerLogLists.append(spoilerLogCurrentString.copy())
 							spoilerLogLists[-1].append(x)
 
-			#If it's not a CANON or a WARPSTAR, then it's probably something we can work with?
+			#If it's not a CANNON or a WARPSTAR, then it's probably something we can work with?
 			elif currentPick in mirrorlist:
 				currentPickId = mirrorlist.index(currentPick)
 				#Dead-end test. If a mirror's exits are all already randomized, add it to the dead-end list and re-random.
@@ -424,7 +452,7 @@ def randomizeMirrors(romFile,spoilerLogEnable,totalRandom,spoilerLogFileName):
 	spoilerLogCompleted = []
 	spoilerBosList = []
 	for x in spoilerLogLists:
-		if not x[-1].startswith("WARPSTAR") and not x[-1].startswith("CANON") and x[-1].startswith("END "):
+		if not x[-1].startswith("WARPSTAR") and not x[-1].startswith("CANNON") and x[-1].startswith("END "):
 			#The reason we're adding "END" to the end of the dead ends is so it doesn't add any goal mirrors that happen to be randomized where the vanilla entrances to bosses are.
 			if mirrors[x[-1][4:]]['type'][0] == 2:
 				spoilerLogCompleted.append(x.copy())
@@ -457,14 +485,14 @@ def randomizeMirrors(romFile,spoilerLogEnable,totalRandom,spoilerLogFileName):
 
 			for y in range(len(spoilerLogCompleted[x])-1):
 				#The mirrors.json doesn't have entries for cannons or warpstars.
-				if spoilerLogCompleted[x][y] == 'CANON1':
-					spoilerTextFile.write("\nRbr42 > Fused Canon")
-				elif spoilerLogCompleted[x][y] == 'CANON2':
-					spoilerTextFile.write("\nMus23L > Fused Canon")
-				elif spoilerLogCompleted[x][y] == 'CANON3':
-					spoilerTextFile.write("\nOli8 > Fused Canon")
-				elif spoilerLogCompleted[x][y] == 'CANON4':
-					spoilerTextFile.write("\nRad26 > Fused Canon")
+				if spoilerLogCompleted[x][y] == 'CANNON1':
+					spoilerTextFile.write("\nRbr42 > Fused CANNON")
+				elif spoilerLogCompleted[x][y] == 'CANNON2':
+					spoilerTextFile.write("\nMus23L > Fused CANNON")
+				elif spoilerLogCompleted[x][y] == 'CANNON3':
+					spoilerTextFile.write("\nOli8 > Fused CANNON")
+				elif spoilerLogCompleted[x][y] == 'CANNON4':
+					spoilerTextFile.write("\nRad26 > Fused CANNON")
 				elif spoilerLogCompleted[x][y] == 'WARPSTAR1':
 					spoilerTextFile.write("\nRbr7 > Warpstar")
 				elif spoilerLogCompleted[x][y] == 'WARPSTAR2':
@@ -492,4 +520,16 @@ def randomizeMirrors(romFile,spoilerLogEnable,totalRandom,spoilerLogFileName):
 			writeValueToRom(romFile,y,location,5)
 		for z in mirrors[mirrorlist[x]]['ninerom']:
 			writeValueToRom(romFile,z,(location >> 8),4)
+		
+		if mirrors[mirrorlistRandomized[x]]['special'][0] == 1 and mirrors[mirrorlist[x]]['special'][0] != -1:
+			romFile.seek(mirrors[mirrorlist[x]]['object'][0] - 4) 				# Seek to the Y position of the door
+			yPos = int.from_bytes(romFile.read(2),'little') + 8					# Move the door down 8 pixels so it overlaps the warp tile.
+			romFile.seek(mirrors[mirrorlist[x]]['object'][0] - 4)
+			romFile.write(yPos.to_bytes(2,'little'))							# Write the changed Y coordinate.
+			writeValueToRom(romFile,mirrors[mirrorlist[x]]['object'][0],153,1)	# Change the object number of the mirror to 99 (a world mirror).
+			writeValueToRom(romFile,mirrors[mirrorlist[x]]['object'][0]+2,1,1)	# This byte changes whether or not the mirror has a "boarded up sprite" if not on a revealed warp tile. This makes them look proper if they're hidden by a mirra.
+	
+		elif mirrors[mirrorlistRandomized[x]]['special'][0] == 2 and mirrors[mirrorlist[x]]['special'][0] != -1:
+			writeValueToRom(romFile,mirrors[mirrorlist[x]]['object'][0]+22,1,1)
+		
 #==================================================
