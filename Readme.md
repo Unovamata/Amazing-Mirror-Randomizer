@@ -1,6 +1,8 @@
 # Kirby & The Amazing Mirror (JP) Randomizer
 This is a multi-feature randomizer for the Japanese release of Kirby &amp; The Amazing Mirror. It currently allows for the randomization of rooms, items and chests, spray paint palettes, ability stands, and the music.
 
+
+
 # Setup
 Here is what you need in order to play a randomized KatAM ROM:
 - This randomizer, which comes with a folder of JSON files, the readme (this!), credits, and the licence info.
@@ -8,6 +10,8 @@ Here is what you need in order to play a randomized KatAM ROM:
 - A Japanese version of Kirby & The Amazing Mirror (This randomizer will eventually be updated to work with all three releases of the game, but currently only the Japanese version works because each version stores data in the ROM in different spots).
 
 After you've got what you need, simply start the EXE, set the paths to your ROM and where you want the randomized ROM to be created, select your settings, and hit generate!
+
+
 
 # Options
 Currently you're able to randomize these settings:
@@ -21,6 +25,8 @@ Currently you're able to randomize these settings:
 - Randomize music: Nothing screams "final boss showdown" louder than the main menu loop. Or, you can turn the music off and listen to your own jams without having to mute the game.
 
 Once you've checked off what you want to randomize, hit the Generate button, and play your ROM!
+
+
 
 # Gameplay Tips
 Randomized mirrors:
@@ -36,15 +42,19 @@ Randomized mirrors:
 Randomized items:
 - Looking for chests? Use your map screen. Areas that have chests in them don't glow until they've all been opened (even if you don't have the area map).
 
+
+
 # Known problems
 With the "Randomize Enemies" mode you can maybe softlock your run, as of right now testing is needed for that kind of problem, the softlock happens because the GBA is performing a lot of palette changes on a specific timeframe, it only happens on very specific rooms, so further development is needed to remove that conflict.
 
 The "Randomize Enemies" mode ruins the color palettes of some of the entities in the game, as of right now, there's no known fix for that.
 
+
+
 # In Closing...
 If you enounter any problems running the randomizer, please please please report it to the Randomizer GitHub page (either the master branch if you're using a release version, or the test-branch if you're testing out one of the new features slated for next release). It can't be fixed if I don't know about it!
 
-If you wish to contact me, you can do so by hitting me up on Discord (TG#7181) or on Twitter (@ThatGuy4878) for a question or comment. I also share a lot of my progress on the Kirby Speedrunning discord in the #romhacks channel there (https://discord.gg/H46jaZY).
+If you wish to contact us, you can do so by hitting me us on Discord (Tsumaru#7657) & (TG#7181) or on Twitter (@ThatGuy4878) for any question or comment you have. There's also  announcements about the development of the program on the Kirby Speedrunning discord in the #romhacks channel there (https://discord.gg/H46jaZY) if you are interested.
 
 I hope you have fun playing!
 
