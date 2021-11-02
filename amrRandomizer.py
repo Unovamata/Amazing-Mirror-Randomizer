@@ -5,6 +5,7 @@ import random
 import os
 import json
 
+from amrEnemies import *
 from amrMirrors import *
 from amrItems import *
 from amrStands import *
@@ -49,7 +50,7 @@ def checkMirrorSettings(mirrorSetting):
 #Produce a random seed number.
 def getRandomSeed():
 	entry_seed_number.delete(0,END) 
-	entry_seed_number.insert(END,str(random.randint(0,999999)))
+	entry_seed_number.insert(END,str(random.randint(-99999999, 99999999)))
 	
 #Double check if everything is good to go before pulling the trigger.
 def validateSettings():
@@ -66,7 +67,11 @@ def validateSettings():
 	if os.path.isfile("JSON\minibosses.json") == False:
 		is_valid = False
 		warning_label.config(text="Error: minibosses.json not found!", fg="#FF0000")
-	
+
+	if os.path.isfile("JSON\enemies.json") == False:
+		is_valid = False
+		warning_label.config(text="Error: minibosses.json not found!", fg="#FF0000")
+
 	try:
 		optionSeedNumber = int(entry_seed_number.get())
 	except ValueError:
@@ -105,6 +110,7 @@ def generateROM(originalrom,randomizedrom):
 	optionMirrors = mirrorcheck.get()
 	optionMirrorsGenerateSpoilerLog = mirrorspoiler.get()
 	optionItems = itemcheck.get()
+	optionEnemies = enemycheck.get()
 	optionMinibosses = minibosscheck.get()
 	optionAbilityStands = abilitycheck.get()
 	optionMusic = musiccheck.get()
@@ -130,6 +136,10 @@ def generateROM(originalrom,randomizedrom):
 	
 	random.seed(optionSeedNumber)
 	
+	#Randomize enemies?
+	if optionEnemies != "Don't Randomize":
+		randomizeEnemies(katamrom, optionEnemies)
+
 	#Randomize the minibosses?
 	if optionMinibosses != "Don't Randomize":
 		randomizeMinibosses(katamrom,0,optionMinibosses)
@@ -160,7 +170,12 @@ def generateROM(originalrom,randomizedrom):
 
 	print("Done.")
 	warning_label.config(text="ROM randomized. Enjoy your game!", fg="#000000")
+
 #==================================================
+
+#General GUI settings;
+button_width = 25
+
 #GUI time.
 random.seed()
 
@@ -168,7 +183,7 @@ randomizer_window = Tk()
 randomizer_window.title("KatAM JP Randomizer")
 randomizer_window.resizable(False, False)
 
-randomizer_window.iconbitmap(resource_path("katamrando.ico"))
+randomizer_window.iconbitmap(resource_path("KirbyRandomizer.ico"))
 
 randomizer_window["padx"] = 14
 randomizer_window["pady"] = 14
@@ -176,6 +191,7 @@ randomizer_window["pady"] = 14
 mirrorcheck = StringVar()
 mirrorspoiler = IntVar()
 itemcheck = StringVar()
+enemycheck = StringVar()
 minibosscheck = StringVar()
 abilitycheck = StringVar()
 musiccheck = StringVar()
@@ -183,6 +199,7 @@ palettecheck = IntVar()
 
 mirrorcheck.set("Don't Randomize")
 itemcheck.set("Don't Randomize")
+enemycheck.set("Don't Randomize")
 minibosscheck.set("Don't Randomize")
 abilitycheck.set("Don't Randomize")
 musiccheck.set("Don't Randomize")
@@ -220,44 +237,54 @@ get_directory_button.grid(row=1,column=2)
 Label(frame_seed_number, text="Seed:").grid(row=0,column=0,sticky=E,pady=6)
 
 entry_seed_number = Entry(frame_seed_number)
-entry_seed_number.config(width=10)
+entry_seed_number.config(width=20)
 entry_seed_number.grid(row=0,column=1,sticky=E)
-entry_seed_number.insert(END,str(random.randint(0,999999)))
+entry_seed_number.insert(END,str(random.randint(-99999999, 99999999)))
 
 random_seed_button = Button(frame_seed_number, text="?", command=getRandomSeed)
 random_seed_button.grid(row=0,column=2)
 
 #Options section.
+#Mirrors
 Label(frame_options, text="Mirrors:").grid(row=0, column=0, sticky=E)
-check_randomize_mirrors = OptionMenu(frame_options, mirrorcheck, "Don't Randomize", "Normal Mode", "Total Random", command=checkMirrorSettings)
-check_randomize_mirrors.configure(width=19)
+check_randomize_mirrors = OptionMenu(frame_options, mirrorcheck, "Don't Randomize", "Shuffle Mode", "Total Random", command=checkMirrorSettings)
+check_randomize_mirrors.configure(width=button_width)
 check_randomize_mirrors.grid(row=0, column=1, sticky=W)
 
 check_randomize_spoilerlog = Checkbutton(frame_options, text="Generate spoiler log.", variable=mirrorspoiler, state=DISABLED)
 check_randomize_spoilerlog.grid(row=1, column=0, columnspan=2)
 
+#Chests and items;
 Label(frame_options, text="Chests and items:").grid(row=2, column=0, sticky=E)
 check_randomize_items = OptionMenu(frame_options, itemcheck, "Don't Randomize", "Shuffle Items", "Randomize Items")
-check_randomize_items.configure(width=19)
+check_randomize_items.configure(width=button_width)
 check_randomize_items.grid(row=2, column=1, sticky=W)
 
-Label(frame_options, text="Minibosses:").grid(row=3, column=0, sticky=E)
-check_randomize_miniboss = OptionMenu(frame_options, minibosscheck, "Don't Randomize", "Shuffle Minibosses", "Randomize Minibosses")
-check_randomize_miniboss.configure(width=19)
-check_randomize_miniboss.grid(row=3, column=1, sticky=W)
+#Enemies;
+Label(frame_options, text="Enemies:").grid(row=3, column=0, sticky=E)
+check_randomize_enemies = OptionMenu(frame_options, enemycheck, "Don't Randomize", "Randomize Enemies")
+check_randomize_enemies.configure(width=button_width)
+check_randomize_enemies.grid(row=3, column=1, sticky=W)
 
-Label(frame_options, text="Ability stands:").grid(row=4, column=0, sticky=E)
-check_randomize_stands = OptionMenu(frame_options, abilitycheck, "Don't Randomize", "Shuffle Stands", "Randomize Stands")
-check_randomize_stands.configure(width=19)
-check_randomize_stands.grid(row=4, column=1, sticky=W)
+#Minibosses;
+Label(frame_options, text="Minibosses:").grid(row=4, column=0, sticky=E)
+check_randomize_miniboss = OptionMenu(frame_options, minibosscheck, "Don't Randomize", "Shuffle Minibosses", "Randomize Minibosses")
+check_randomize_miniboss.configure(width=button_width)
+check_randomize_miniboss.grid(row=4, column=1, sticky=W)
+
+#Ability stands;
+Label(frame_options, text="Ability stands:").grid(row=5, column=0, sticky=E)
+check_randomize_stands = OptionMenu(frame_options, abilitycheck, "Don't Randomize", "Shuffle Stands", "Randomize Stands", "Unlock Path Abilites Only")
+check_randomize_stands.configure(width=button_width)
+check_randomize_stands.grid(row=5, column=1, sticky=W)
 
 check_randomize_palettes = Checkbutton(frame_options, text="Randomize spray palettes.", variable=palettecheck)
-check_randomize_palettes.grid(row=5, column=0, columnspan=2)
+check_randomize_palettes.grid(row=6, column=0, columnspan=2)
 
-Label(frame_options, text="Music:").grid(row=6, column=0, sticky=E)
+Label(frame_options, text="Music:").grid(row=7, column=0, sticky=E)
 check_randomize_music = OptionMenu(frame_options, musiccheck, "Don't Randomize", "Shuffle Music", "Turn Music Off")
-check_randomize_music.configure(width=19)
-check_randomize_music.grid(row=6, column=1, sticky=W)
+check_randomize_music.configure(width=button_width)
+check_randomize_music.grid(row=7, column=1, sticky=W)
 
 #Generate ROM section.
 generate_button = Button(frame_generate_rom, text="Generate ROM",command=validateSettings)
@@ -266,6 +293,9 @@ generate_button.grid(row=0, pady=6)
 warning_label = Label(frame_generate_rom, text="Please view the readme for info about the different settings.")
 warning_label.grid(row=1)
 
-Label(frame_generate_rom, text="KatAM Randomizer Test Branch").grid(row=2)
+warning_label = Label(frame_generate_rom, text='(*) Bomb, Hammer, Smash, Cutter, Sword and Rock are "Unlock Path Abilties"')
+warning_label.grid(row=2)
+
+Label(frame_generate_rom, text="KatAM Randomizer Test Branch").grid(row=3)
 
 randomizer_window.mainloop()
