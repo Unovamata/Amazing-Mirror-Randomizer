@@ -16,7 +16,7 @@ Currently you're able to randomize these settings:
   - Total Random mode: By default, mirror are only randomized with mirrors of a similar type, e.g. two-way mirrors (mirrors that have a big star above them) and one-way mirrors (mirros that have a smaller star above them). Enabing Total Random turns this off, and shuffles everything together.
 - Randomize items and chests: This makes it so all the overworld 1UP, health items, batteries, candies, and chests are scrambled with one another. This mode changes all big chests to small chests (they'll still have the same contents, it's just an aesthetic change). Picking "shuffle" will maintain the non-chest item distribution in the vanilla game (e.g. there's 46 cherries, 87 pep drinks, etc.). Randomize simply picks random items. Either mode will shuffle the chests as well.
 - Randomize minibosses: Exactly what it says on the tin. Also has "shuffle" and "randomize" options.
-- Randomize ability stands: Feel like having wheel and smash in the first Peppermint Palace switch room? You might if you're lucky enough. Also has "shuffle" and "randomize" options.
+- Randomize ability stands: You can either choose some specific abilities to appear or rather randomize all of them if you feel like it.
 - Randomize spray palletes: This changes how each of the spray paint colours look. It can lead to some particularily...funky looks for Kirby.
 - Randomize music: Nothing screams "final boss showdown" louder than the main menu loop. Or, you can turn the music off and listen to your own jams without having to mute the game.
 
@@ -36,9 +36,16 @@ Randomized mirrors:
 Randomized items:
 - Looking for chests? Use your map screen. Areas that have chests in them don't glow until they've all been opened (even if you don't have the area map).
 
+# Known problems
+With the "Randomize Enemies" mode you can maybe softlock your run, as of right now testing is needed for that kind of problem, the softlock happens because the GBA is performing a lot of palette changes on a specific timeframe, it only happens on very specific rooms, so further development is needed to remove that conflict.
+
+The "Randomize Enemies" mode ruins the color palettes of some of the entities in the game, as of right now, there's no known fix for that.
+
 # In Closing...
 If you enounter any problems running the randomizer, please please please report it to the Randomizer GitHub page (either the master branch if you're using a release version, or the test-branch if you're testing out one of the new features slated for next release). It can't be fixed if I don't know about it!
 
 If you wish to contact me, you can do so by hitting me up on Discord (TG#7181) or on Twitter (@ThatGuy4878) for a question or comment. I also share a lot of my progress on the Kirby Speedrunning discord in the #romhacks channel there (https://discord.gg/H46jaZY).
 
 I hope you have fun playing!
+
+
