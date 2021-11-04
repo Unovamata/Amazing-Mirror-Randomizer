@@ -59,7 +59,7 @@ def randomizeMirrors(romFile,spoilerLogEnable,totalRandom,spoilerLogFileName):
 
 	#If we're generating a spoiler log, edit the random seed so that people can't cheat during races or something.
 	if spoilerLogEnable == 1:
-		random.seed(random.randint(0,999999))
+		random.seed(random.randint(-99999999,99999999))
 	
 	#Randomize warp stars.
 	print("Randomizing warp stars...")
@@ -89,7 +89,7 @@ def randomizeMirrors(romFile,spoilerLogEnable,totalRandom,spoilerLogFileName):
 		mirrorListRandomized.append('NULL')
 		
 	#Please note that these are the "Pre" random lists.
-	if totalRandom == "Normal Mode":
+	if totalRandom == "Shuffle Mode":
 		twoWayPreRandomList = []
 		oneWayPreRandomList = []
 		deadEndTwoWayPreRandomList = []
@@ -101,7 +101,7 @@ def randomizeMirrors(romFile,spoilerLogEnable,totalRandom,spoilerLogFileName):
 	print("Determining dead ends...")
 	for x in mirrorlist:
 		if mirrors[x]['type'][0] == 1:
-			if totalRandom == "Normal Mode":
+			if totalRandom == "Shuffle Mode":
 				if len(mirrors[x]['exits']) == 1:
 					deadEndTwoWayPreRandomList.append(x)
 				else:
@@ -110,18 +110,18 @@ def randomizeMirrors(romFile,spoilerLogEnable,totalRandom,spoilerLogFileName):
 				mirrorPreRandomList.append(x)
 		else:
 			if 'DEADEND' in mirrors[x]['exits']:
-				if totalRandom == "Normal Mode":
+				if totalRandom == "Shuffle Mode":
 					deadEndOneWayPreRandomList.append(x)
 				else:
 					deadEndPreRandomList.append(x)
 			else:
-				if totalRandom == "Normal Mode":
+				if totalRandom == "Shuffle Mode":
 					oneWayPreRandomList.append(x)
 				else:
 					mirrorPreRandomList.append(x)
 
 	print("Randomizing mirrors...")
-	if totalRandom == "Normal Mode":
+	if totalRandom == "Shuffle Mode":
 		random.shuffle(twoWayPreRandomList)
 		random.shuffle(oneWayPreRandomList)
 		random.shuffle(deadEndTwoWayPreRandomList)
