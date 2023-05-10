@@ -44,5 +44,4 @@ def randomizeEnemies(romFile,randomMode):
 
 	if randomMode == "Randomize Enemies":
 		for z in enemy_list_add_size:
-			#print("&",z)
 			writeValueToRom(romFile, enemyadd[z], random.choice(ids), 1)

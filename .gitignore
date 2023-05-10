@@ -1,0 +1,8 @@
+#Python cache files.
+*.pyc
+
+#VSC auto-generated files.
+settings.json
+
+#Ignoring the objectdata.txt file as it can inflate the contributed line count.
+objectdata.txt

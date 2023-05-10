@@ -1,0 +1,191 @@
+88D88A - Mr. Frosty
+	====X/Y====  ==CAM X/Y==
+Ground: A0 00 48 00, 70 FF C8
+   Air: 1A 00 30 00, F6 FF E0
+Facing: 01
+
+890A46 - Mr. Frosty
+	====X/Y====  ==CAM X/Y==
+Ground: B8 01 E8 00, 38 FF 98
+   Air: C8 01 E0 00, 28 FF A0
+Facing: 00
+
+89D582 - Mr. Frosty
+	====X/Y====  ==CAM X/Y==
+Ground: 18 01 68 00, 88 FF A8
+   Air: 78 01 48 00, 0F FF C8
+Facing: 00
+
+88DC12 - Bonkers
+	====X/Y====  ==CAM X/Y==
+Ground: 58 00 C8 01, C8 FF 98
+   Air: 20 00 90 01, FF FF A0
+Facing: 01
+
+897F5E - Bonkers
+	====X/Y====  ==CAM X/Y==
+Ground: B8 01 E8 00, 68 FF 98
+   Air: D8 01 A8 00, 48 FF D8
+Facing: 00
+
+897F5E - Bonkers
+	====X/Y====  ==CAM X/Y==
+Ground: C0 01 B0 00, 30 FF A0
+   Air: C8 01 80 00, 28 FF C8
+Facing: 00
+
+899036 - Bonkers
+	====X/Y====  ==CAM X/Y==
+Ground: 88 01 28 01, 88 FF A8
+   Air: C8 01 F0 00, 48 FF E0
+Facing: 00
+
+89A146 - Bonkers
+	====X/Y====  ==CAM X/Y==
+Ground: 20 01 18 02, 90 FF A8
+   Air: B8 00 E8 01, F8 FF D8
+Facing: 01
+
+88AFE2 - Batafire
+	====X/Y====  ==CAM X/Y==
+Ground: 28 00 20 02, E3 FF C5
+   Air: 28 00 20 02, E3 FF C5
+Facing: 01
+
+88E5C2 - Batafire
+	====X/Y====  ==CAM X/Y==
+Ground: E0 00 70 00, 20 FF 90
+   Air: E0 00 40 00, 20 FF C0
+Facing: 00
+
+8952DA - Batafire
+	====X/Y====  ==CAM X/Y==
+Ground: D0 01 88 00, 30 FF C8
+   Air: D0 01 A0 00, 30 FF B0
+Facing: 00
+
+899E72 - Batafire
+	====X/Y====  ==CAM X/Y==
+Ground: 40 00 18 02, D0 FF D8
+   Air: 20 00 18 02, F0 FF D8
+Facing: 01
+
+8920FE - PhanPhan
+	====X/Y====  ==CAM X/Y==
+Ground: F0 03 80 00, D0 FF 90
+   Air: D8 03 48 00, E8 FF C8
+Facing: 01
+
+894B92 - PhanPhan
+	====X/Y====  ==CAM X/Y==
+Ground: D8 00 00 01, C8 FF B0
+   Air: A8 00 C8 00, F8 FF E8
+Facing: 01
+
+8960E6 - PhanPhan
+	====X/Y====  ==CAM X/Y==
+Ground: 90 02 80 00, C8 FF 90
+   Air: 70 02 40 00, E8 FF D0
+Facing: 01
+
+8A4572 - PhanPhan
+	====X/Y====  ==CAM X/Y==
+Ground: 40 00 C0 01, D0 FF B0
+   Air: 18 00 80 01, F8 FF F0
+Facing: 01
+
+88B176 - Box Boxer
+	====X/Y====  ==CAM X/Y==
+Ground: 38 01 10 01, B8 FF 90
+   Air: 08 01 D8 00, E8 FF C8
+Facing: 01
+
+88F976 - Box Boxer
+	====X/Y====  ==CAM X/Y==
+Ground: 38 00 E0 00, E8 FF A0
+   Air: 18 00 A8 00, FF FF D8
+Facing: 01
+
+894CBA - Box Boxer
+	====X/Y====  ==CAM X/Y==
+Ground: A0 00 50 01, 80 FF A0
+   Air: E0 00 18 01, 40 FF D8
+Facing: 00
+
+896F2E - Box Boxer
+	====X/Y====  ==CAM X/Y==
+Ground: 20 01 A8 00, D0 FF B8
+   Air: 18 01 80 00, D8 FF D0
+Facing: 01
+
+89AC3A - Box Boxer
+	====X/Y====  ==CAM X/Y==
+Ground: 30 00 70 00, E0 FF A0
+   Air: 08 00 40 00, FF FF D8
+Facing: 01
+
+88C0F6 - Boxy
+	====X/Y====  ==CAM X/Y==
+Ground: B8 01 10 01, D8 FF A0
+   Air: A0 01 E0 00, E0 FF C0
+Facing: 1
+
+88D7AA - Boxy
+	====X/Y====  ==CAM X/Y==
+Ground: 50 00 48 01, E0 FF 98
+   Air: 30 00 10 01, 00 00 C0
+Facing: 1
+
+893802 - Boxy
+	====X/Y====  ==CAM X/Y==
+Ground: 78 04 88 00, 58 FF A8
+   Air: 98 04 50 00, 38 FF D0
+Facing: 0
+
+89D7CA - Boxy
+	====X/Y====  ==CAM X/Y==
+Ground: B8 01 00 01, 38 FF B0
+   Air: D0 01 D8 00, 10 FF D8
+Facing: 0
+
+8A227E - Boxy
+	====X/Y====  ==CAM X/Y==
+Ground: 90 02 70 00, 50 FF 90
+   Air: C0 02 38 00, 20 FF C8
+Facing: 0
+
+8894EA - Master Hand
+	====X/Y====  ==CAM X/Y==
+Ground: A8 01 00 01, 48 FF D0
+   Air: D0 01 08 01, 20 FF C8
+Facing: 00
+
+89746E - Master Hand
+	====X/Y====  ==CAM X/Y==
+Ground: B0 01 50 00, 48 FF A8
+   Air: D0 01 38 00, 20 FF C8
+Facing: 00
+
+8A09B2 - Master Hand
+	====X/Y====  ==CAM X/Y==
+Ground: ,
+   Air: 78 01 78 00, 18 FF 98
+Facing: 00
+
+890F16 - Bombar
+	====X/Y====  ==CAM X/Y==
+Ground: 88 00 30 00, E8 FF D0
+   Air: 88 00 30 00, E8 FF D0
+Facing: 01
+
+892AA6 - Bombar
+	====X/Y====  ==CAM X/Y==
+Ground: 40 07 48 00, 10 FF C0
+   Air: 40 07 38 00, 10 FF D0
+Facing: 00
+
+8956D2 - Bombar
+	====X/Y====  ==CAM X/Y==
+Ground: 88 05 38 00, 18 FF C8
+   Air: 88 05 38 00, 18 FF C8
+Facing: 00

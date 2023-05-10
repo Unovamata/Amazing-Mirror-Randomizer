@@ -286,5 +286,14 @@
 		"groundcam": 1638344,
 		"aircam": 1638344,
 		"facing": 0
+	},
+	"Dark_Mind": {
+		"object": 75,
+		"address": 9062700,
+		"groundxy": 2684372992,
+		"airxy": 436219904,
+		"groundcam": 7405512,
+		"aircam": 16187360,
+		"facing": 1
 	}
 }

@@ -24,13 +24,13 @@ def randomizeMinibosses(romFile,minibossDifficulty,minibossesMode):
 			minibossList.append(minibosses[x]['object'])
 	else:
 		for x in range(len(minibossKeys)):
-			#minibossList.append(random.randint(56,63))
-			minibossList.append(59)
+			minibossList.append(random.randint(56,63))
 	
 	random.shuffle(minibossList)
 	
 	for x in range(len(minibossKeys)):
 		if checkIfFlying(minibossList[x]):
+			print(minibosses[minibossKeys[x]])
 			#X/Y of the object, and how close you need to be to it to start the fight.
 			writeValueToRom(romFile,minibosses[minibossKeys[x]]['address'],minibosses[minibossKeys[x]]['airxy'],4)
 			writeValueToRom(romFile,minibosses[minibossKeys[x]]['address']+20,minibosses[minibossKeys[x]]['aircam'],3)
