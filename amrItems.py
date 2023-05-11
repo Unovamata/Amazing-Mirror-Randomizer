@@ -6,25 +6,40 @@ import random
 import os
 import json
 from amrShared import *
+from amrConfig import *
+
+print("Randomizing chests and items...")
+
 #==================================================
-def chestlistAppend(list,room,value):
-	if list[room][0] == 0:
-		list[room][0] = value
-	else:
-		list[room].append(value)
+# Loading Weights for Random Generation
+#==================================================
+
+def GetWeightItem(name, pointer):
+	return [GetItem(name)] * itemWeights[pointer]
+
+#Referencing amrConfig
+items = [("Cherry", 0), ("Drink", 1), ("Meat", 2), ("Battery", 3),
+	 	("Tomato", 4), ("1Up", 5), ("Candy", 6)]
+weightedItemsToRandomize = []
+
+for item in items:
+	weightedItemsToRandomize.extend(GetWeightItem(item[0], item[1]))
+
+#==================================================
+# Loading Weights for Random Generation
+#==================================================
 
 def randomizeItems(romFile,randomMode):
-	print("Randomizing chests and items...")
-	items = json.load(open('JSON\items.json'))
+	items = GetItemsJSON()
 	itemlist = []
 	itemadd = []
 	itemxy = []
 	itemroom = []
 	chestlist = []
 	itemindex = 0
-	#itemRandomDistribution = [112145907843072]
-	itemRandomDistribution = [104449309671424, 104449309671424, 104449309671424, 104449309671424, 105548821299200, 105548821299200, 105548821299200, 105548821299200, 106648332926976, 106648332926976, 106648332926976, 107747844554752, 107747844554752, 108847356182528, 108847356182528, 109946867810304, 111046379438080]
 	
+	#itemRandomDistribution = [112145907843072]
+
 	for x in range(287):
 		chestlist.append([0])
 	
@@ -50,7 +65,7 @@ def randomizeItems(romFile,randomMode):
 		if randomMode == "Shuffle Items":
 			itemlist.append(items["Cherry"]["item"][0])
 		else:
-			itemlist.append(random.choice(itemRandomDistribution))
+			itemlist.append(random.choice(weightedItemsToRandomize))
 		itemadd.append(x)
 	for x in items["Cherry"]["xy"]:
 		itemxy.append(x)
@@ -61,7 +76,7 @@ def randomizeItems(romFile,randomMode):
 		if randomMode == "Shuffle Items":
 			itemlist.append(items["Drink"]["item"][0])
 		else:
-			itemlist.append(random.choice(itemRandomDistribution))
+			itemlist.append(random.choice(weightedItemsToRandomize))
 		itemadd.append(x)
 	for x in items["Drink"]["xy"]:
 		itemxy.append(x)
@@ -72,7 +87,7 @@ def randomizeItems(romFile,randomMode):
 		if randomMode == "Shuffle Items":
 			itemlist.append(items["Meat"]["item"][0])
 		else:
-			itemlist.append(random.choice(itemRandomDistribution))
+			itemlist.append(random.choice(weightedItemsToRandomize))
 		itemadd.append(x)
 	for x in items["Meat"]["xy"]:
 		itemxy.append(x)
@@ -83,7 +98,7 @@ def randomizeItems(romFile,randomMode):
 		if randomMode == "Shuffle Items":
 			itemlist.append(items["Tomato"]["item"][0])
 		else:
-			itemlist.append(random.choice(itemRandomDistribution))
+			itemlist.append(random.choice(weightedItemsToRandomize))
 		itemadd.append(x)
 	for x in items["Tomato"]["xy"]:
 		itemxy.append(x)
@@ -94,7 +109,7 @@ def randomizeItems(romFile,randomMode):
 		if randomMode == "Shuffle Items":
 			itemlist.append(items["Battery"]["item"][0])
 		else:
-			itemlist.append(random.choice(itemRandomDistribution))
+			itemlist.append(random.choice(weightedItemsToRandomize))
 		itemadd.append(x)
 	for x in items["Battery"]["xy"]:
 		itemxy.append(x)
@@ -105,7 +120,7 @@ def randomizeItems(romFile,randomMode):
 		if randomMode == "Shuffle Items":
 			itemlist.append(items["1Up"]["item"][0])
 		else:
-			itemlist.append(random.choice(itemRandomDistribution))
+			itemlist.append(random.choice(weightedItemsToRandomize))
 		itemadd.append(x)
 	for x in items["1Up"]["xy"]:
 		itemxy.append(x)
@@ -116,7 +131,7 @@ def randomizeItems(romFile,randomMode):
 		if randomMode == "Shuffle Items":
 			itemlist.append(items["Candy"]["item"][0])
 		else:
-			itemlist.append(random.choice(itemRandomDistribution))
+			itemlist.append(random.choice(itemsToRandomize))
 		itemadd.append(x)
 	for x in items["Candy"]["xy"]:
 		itemxy.append(x)
@@ -139,6 +154,12 @@ def randomizeItems(romFile,randomMode):
 		if itemroom[x] >= 4:
 			itemroom[x] += 1
 	
+	def chestlistAppend(list,room,value):
+		if list[room][0] == 0:
+			list[room][0] = value
+		else:
+			list[room].append(value)
+
 	#Add the new XYs of the chests to the chestlist
 	for x in items["SmallChest"]["item"]:
 		itemindex = itemlist.index(x)

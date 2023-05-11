@@ -5,8 +5,7 @@ from amrShared import *
     * From there, you'll need to convert the id shown in the 
     * page above from hexadecimal to decimal. The decimal value
     * you converted is the number you'll use in this object scanner
-    * script.
-'''
+    * script. '''
 
 #==================================================
 # Open and process the object table;
