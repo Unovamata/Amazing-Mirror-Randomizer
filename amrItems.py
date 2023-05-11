@@ -14,16 +14,21 @@ print("Randomizing chests and items...")
 # Loading Weights for Random Generation
 #==================================================
 
+# Creates an array with the weights specified
 def GetWeightItem(name, pointer):
 	return [GetItem(name)] * itemWeights[pointer]
 
 #Referencing amrConfig
-items = [("Cherry", 0), ("Drink", 1), ("Meat", 2), ("Battery", 3),
+weightReference = [("Cherry", 0), ("Drink", 1), ("Meat", 2), ("Battery", 3),
 	 	("Tomato", 4), ("1Up", 5), ("Candy", 6)]
 weightedItemsToRandomize = []
 
-for item in items:
+for item in weightReference: #Fuses created arrays
 	weightedItemsToRandomize.extend(GetWeightItem(item[0], item[1]))
+
+def Test(value):
+	print("")
+Test("Cherry")
 
 #==================================================
 # Loading Weights for Random Generation
@@ -35,113 +40,44 @@ def randomizeItems(romFile,randomMode):
 	itemadd = []
 	itemxy = []
 	itemroom = []
-	chestlist = []
+	chestlist = [0] * 287
 	itemindex = 0
 	
-	#itemRandomDistribution = [112145907843072]
+	#If it's not a chest, then shuffle it if the user decides so
+	def ManageAddressData(value):
+		if(value != "BigChest" | value != "SmallChest"):
+			if randomMode == "Shuffle Items":
+				itemlist.append(GetItem("Cherry")[0])
+			else:
+				itemlist.append(random.choice(weightedItemsToRandomize))
+		else:
+			itemadd.append(value)
 
-	for x in range(287):
-		chestlist.append([0])
-	
-	for x in items["BigChest"]["item"]:
-		itemlist.append(x)
-	for x in items["BigChest"]["address"]:
-		itemadd.append(x)
-	for x in items["BigChest"]["xy"]:
-		itemxy.append(x)
-	for x in items["BigChest"]["room"]:
-		itemroom.append(x)
+	#Load object's data based on its name
+	def LoadObjectData(object):
+		for key in GetObject(items, object):
+			for value in GetParameter(items, object, key):
+				match key:
+					case "item": itemlist.append(value)
+					case "address": ManageAddressData(value)
+					case "xy": itemxy.append(value) 
+					case "room":itemroom.append(value)
 
-	for x in items["SmallChest"]["item"]:
-		itemlist.append(x)
-	for x in items["SmallChest"]["address"]:
-		itemadd.append(x)
-	for x in items["SmallChest"]["xy"]:
-		itemxy.append(x)
-	for x in items["SmallChest"]["room"]:
-		itemroom.append(x)
-		
-	for x in items["Cherry"]["address"]:
-		if randomMode == "Shuffle Items":
-			itemlist.append(items["Cherry"]["item"][0])
-		else:
-			itemlist.append(random.choice(weightedItemsToRandomize))
-		itemadd.append(x)
-	for x in items["Cherry"]["xy"]:
-		itemxy.append(x)
-	for x in items["Cherry"]["room"]:
-		itemroom.append(x)
-		
-	for x in items["Drink"]["address"]:
-		if randomMode == "Shuffle Items":
-			itemlist.append(items["Drink"]["item"][0])
-		else:
-			itemlist.append(random.choice(weightedItemsToRandomize))
-		itemadd.append(x)
-	for x in items["Drink"]["xy"]:
-		itemxy.append(x)
-	for x in items["Drink"]["room"]:
-		itemroom.append(x)
-	
-	for x in items["Meat"]["address"]:
-		if randomMode == "Shuffle Items":
-			itemlist.append(items["Meat"]["item"][0])
-		else:
-			itemlist.append(random.choice(weightedItemsToRandomize))
-		itemadd.append(x)
-	for x in items["Meat"]["xy"]:
-		itemxy.append(x)
-	for x in items["Meat"]["room"]:
-		itemroom.append(x)
-		
-	for x in items["Tomato"]["address"]:
-		if randomMode == "Shuffle Items":
-			itemlist.append(items["Tomato"]["item"][0])
-		else:
-			itemlist.append(random.choice(weightedItemsToRandomize))
-		itemadd.append(x)
-	for x in items["Tomato"]["xy"]:
-		itemxy.append(x)
-	for x in items["Tomato"]["room"]:
-		itemroom.append(x)
-		
-	for x in items["Battery"]["address"]:
-		if randomMode == "Shuffle Items":
-			itemlist.append(items["Battery"]["item"][0])
-		else:
-			itemlist.append(random.choice(weightedItemsToRandomize))
-		itemadd.append(x)
-	for x in items["Battery"]["xy"]:
-		itemxy.append(x)
-	for x in items["Battery"]["room"]:
-		itemroom.append(x)
-		
-	for x in items["1Up"]["address"]:
-		if randomMode == "Shuffle Items":
-			itemlist.append(items["1Up"]["item"][0])
-		else:
-			itemlist.append(random.choice(weightedItemsToRandomize))
-		itemadd.append(x)
-	for x in items["1Up"]["xy"]:
-		itemxy.append(x)
-	for x in items["1Up"]["room"]:
-		itemroom.append(x)
-		
-	for x in items["Candy"]["address"]:
-		if randomMode == "Shuffle Items":
-			itemlist.append(items["Candy"]["item"][0])
-		else:
-			itemlist.append(random.choice(itemsToRandomize))
-		itemadd.append(x)
-	for x in items["Candy"]["xy"]:
-		itemxy.append(x)
-	for x in items["Candy"]["room"]:
-		itemroom.append(x)
+	#Loading all the pertinent data to shuffle
+	LoadObjectData("BigChest")
+	LoadObjectData("SmallChest")
+	LoadObjectData("Cherry")
+	LoadObjectData("Drink")
+	LoadObjectData("Meat")
+	LoadObjectData("Tomato")
+	LoadObjectData("Battery")
+	LoadObjectData("1Up")
+	LoadObjectData("Candy")
 		
 	random.shuffle(itemlist)
 
-	for x in range(len(itemadd)):
-		writeValueToRom(romFile,itemadd[x],itemlist[x],6)
+	for i in range(len(itemadd)):
+		writeValueToRom(romFile, itemadd[i], itemlist[i], 6)
 		
 	#Add non-randomized chests to the lists (World map chest and passageway switches...because they're chests apparently).
 	itemlist.extend([142932386250752, 142933880078354, 142933880078401, 142933880078410, 142933880078413])
