@@ -5,6 +5,7 @@ def writeValueToRom(romname,address,value,bytes):
 	romname.seek(address)
 	romname.write(value.to_bytes(bytes,'big'))
 
+
 #==================================================
 # Reverses the placement of an INT value.
 #==================================================
@@ -68,5 +69,3 @@ def GetItem(key):
 
 enemyDictionary = LoadJSONInDictionary(GetEnemiesJSON(), "id")
 itemDictionary = LoadJSONInDictionary(GetItemsJSON(), "item")
-
-print(GetParameter(GetItemsJSON(), "Cherry", "item"))

@@ -20,15 +20,11 @@ def GetWeightItem(name, pointer):
 
 #Referencing amrConfig
 weightReference = [("Cherry", 0), ("Drink", 1), ("Meat", 2), ("Battery", 3),
-	 	("Tomato", 4), ("1Up", 5), ("Candy", 6)]
+	 	("Tomato", 4), ("1Up", 5), ("Candy", 6), ("MirrorShards", 7)]
 weightedItemsToRandomize = []
 
 for item in weightReference: #Fuses created arrays
 	weightedItemsToRandomize.extend(GetWeightItem(item[0], item[1]))
-
-def Test(value):
-	print("")
-Test("Cherry")
 
 #==================================================
 # Loading Weights for Random Generation
@@ -40,18 +36,16 @@ def randomizeItems(romFile,randomMode):
 	itemadd = []
 	itemxy = []
 	itemroom = []
-	chestlist = [0] * 287
-	itemindex = 0
 	
 	#If it's not a chest, then shuffle it if the user decides so
-	def ManageAddressData(value):
-		if(value != "BigChest" | value != "SmallChest"):
-			if randomMode == "Shuffle Items":
-				itemlist.append(GetItem("Cherry")[0])
-			else:
-				itemlist.append(random.choice(weightedItemsToRandomize))
-		else:
+	def ManageAddressData(name, value):
+		if(name == "BigChest" or name == "SmallChest" or name == "Unrandomized"):
 			itemadd.append(value)
+		else:
+			if randomMode == "Shuffle Items":
+				itemlist.extend(GetItem(name)[0])
+			else:
+				itemlist.extend(random.choice(weightedItemsToRandomize))
 
 	#Load object's data based on its name
 	def LoadObjectData(object):
@@ -59,42 +53,42 @@ def randomizeItems(romFile,randomMode):
 			for value in GetParameter(items, object, key):
 				match key:
 					case "item": itemlist.append(value)
-					case "address": ManageAddressData(value)
+					case "address": ManageAddressData(object, value)
 					case "xy": itemxy.append(value) 
 					case "room":itemroom.append(value)
 
 	#Loading all the pertinent data to shuffle
 	LoadObjectData("BigChest")
 	LoadObjectData("SmallChest")
-	LoadObjectData("Cherry")
-	LoadObjectData("Drink")
-	LoadObjectData("Meat")
-	LoadObjectData("Tomato")
-	LoadObjectData("Battery")
-	LoadObjectData("1Up")
-	LoadObjectData("Candy")
-		
+
+	for item in weightReference: #All other items;
+		LoadObjectData(item[0])
 	random.shuffle(itemlist)
 
+	#Writing to rom
 	for i in range(len(itemadd)):
-		writeValueToRom(romFile, itemadd[i], itemlist[i], 6)
+		break
+		#print[itemlist[i]]
+		#writeValueToRom(romFile, itemadd[i], itemlist[i][0], 6)
 		
-	#Add non-randomized chests to the lists (World map chest and passageway switches...because they're chests apparently).
-	itemlist.extend([142932386250752, 142933880078354, 142933880078401, 142933880078410, 142933880078413])
-	itemadd.extend([8933912, 8970772, 9032664, 9049580, 9056256])
-	itemxy.extend([939810816, 3087036416, 671100928, 3355455488, 805326848])
-	itemroom.extend([3, 81, 201, 238, 251]) 
+	#==================================================
+	# Chests & Non-Randomizable items;
+	#==================================================
+	LoadObjectData("Unrandomized")
 	
-	#Move the item list over one room, since the Test Room doesn't have an entry in the item list and that fucks things up.
-	for x in range(len(itemroom)):
-		if itemroom[x] >= 4:
-			itemroom[x] += 1
+	#Move the item list over one room, as it generates discrepancies
+	for room in range(len(itemroom)):
+		if itemroom[room] >= 4:
+			itemroom[room] += 1
 	
-	def chestlistAppend(list,room,value):
+	def chestlistAppend(list, room, value):
 		if list[room][0] == 0:
 			list[room][0] = value
 		else:
 			list[room].append(value)
+
+	chestlist = [0] * 287
+	itemindex = 0
 
 	#Add the new XYs of the chests to the chestlist
 	for x in items["SmallChest"]["item"]:
