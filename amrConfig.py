@@ -3,4 +3,22 @@
 
 from amrShared import *
 
+#==================================================
+# Randomizer Options
+#==================================================
+
+optionSeedNumber = ""
+optionMirrors = ""
+optionMirrorsGenerateSpoilerLog = ""
+optionItems = ""
+optionEnemies = ""
+optionMinibosses = ""
+optionAbilityStands = ""
+optionMusic = ""
+optionColours = ""
+
+#==================================================
+# Weights
+#==================================================
+
 itemWeights = [4, 4, 3, 2, 2, 1, 1, 0]
