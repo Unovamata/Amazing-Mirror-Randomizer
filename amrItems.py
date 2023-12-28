@@ -10,8 +10,6 @@ import itertools
 # Loading Weights for Random Generation
 #==================================================
 # Creates an array with the weights specified
-def GetWeightItem(name, pointer):
-    return GetItem(name) * itemWeights[pointer]
 
 #Referencing amrConfig
 weightReference = [("Cherry", 4), ("Drink", 4), ("Meat", 3), ("Tomato", 2),
@@ -46,27 +44,6 @@ def randomizeItems(romFile, randomMode):
     itemroom = []
     chestlist = []
     itemindex = 0
-
-    for x in range(287):
-        chestlist.append([0])
-
-    for x in items["BigChest"]["item"]:
-        itemlist.append(x)
-    for x in items["BigChest"]["address"]:
-        itemadd.append(x)
-    for x in items["BigChest"]["xy"]:
-        itemxy.append(x)
-    for x in items["BigChest"]["room"]:
-        itemroom.append(x)
-
-    for x in items["SmallChest"]["item"]:
-        itemlist.append(x)
-    for x in items["SmallChest"]["address"]:
-        itemadd.append(x)
-    for x in items["SmallChest"]["xy"]:
-        itemxy.append(x)
-    for x in items["SmallChest"]["room"]:
-        itemroom.append(x)
 
     for x in items["Cherry"]["address"]:
         if randomMode == "Shuffle Items":
@@ -143,6 +120,57 @@ def randomizeItems(romFile, randomMode):
     for x in items["Candy"]["xy"]:
         itemxy.append(x)
     for x in items["Candy"]["room"]:
+        itemroom.append(x)
+
+
+    # ==================================================
+
+
+    # Replacing regular overworld items with mirrors;
+    mirrorWeight = weightReference[7][1]
+
+    if mirrorWeight != 0:
+        print("Adding random shard fragments in the overworld...")
+        mirrorIndexList = []
+        mirrorAddressList = GetItem("MirrorShards")
+
+        while len(mirrorIndexList) < mirrorWeight * 8:
+            index = random.randint(0, len(itemlist) - 1)
+
+            if index not in mirrorIndexList:
+                mirrorIndexList.append(index)
+
+        currentIndex = 0
+
+        for index in mirrorIndexList:
+            itemlist[index] = mirrorAddressList[currentIndex]
+
+            if currentIndex % mirrorWeight == 0:
+                currentIndex += 1
+
+
+    # ==================================================
+
+
+    for x in range(287):
+        chestlist.append([0])
+
+    for x in items["BigChest"]["item"]:
+        itemlist.append(x)
+    for x in items["BigChest"]["address"]:
+        itemadd.append(x)
+    for x in items["BigChest"]["xy"]:
+        itemxy.append(x)
+    for x in items["BigChest"]["room"]:
+        itemroom.append(x)
+
+    for x in items["SmallChest"]["item"]:
+        itemlist.append(x)
+    for x in items["SmallChest"]["address"]:
+        itemadd.append(x)
+    for x in items["SmallChest"]["xy"]:
+        itemxy.append(x)
+    for x in items["SmallChest"]["room"]:
         itemroom.append(x)
 
     random.shuffle(itemlist)
