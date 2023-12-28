@@ -6,3 +6,6 @@ settings.json
 
 #Ignoring the objectdata.txt file as it can inflate the contributed line count.
 objectdata.txt
+
+# Removing the rom file
+Hoshi no Kirby - Kagami no Daimeikyuu (Japan) (Rev 1).gba
