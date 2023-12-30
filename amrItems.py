@@ -142,10 +142,10 @@ def randomizeItems(romFile, randomMode):
 
         currentIndex = 0
 
-        for index in mirrorIndexList:
+        for iterator, index in enumerate(mirrorIndexList):
             itemlist[index] = mirrorAddressList[currentIndex]
 
-            if currentIndex % mirrorWeight == 0:
+            if (iterator + 1) % mirrorWeight == 0:
                 currentIndex += 1
 
 
